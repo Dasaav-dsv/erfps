@@ -339,6 +339,7 @@ inline void* lockTgtCode = nullptr;
 inline void* chunkCode = nullptr;
 inline void* rootTransformCode = nullptr;
 inline void* stateInfoCode = nullptr;
+inline void* ragdollCode = nullptr;
 
 inline void* hitDetectCode = nullptr;
 inline void* hitDetectCodeCpy = nullptr;
@@ -360,10 +361,6 @@ inline void* writeRendMCode01 = nullptr;
 inline void* writeRendMCode02 = nullptr;
 
 inline void* writeRendMCall01 = nullptr;
-
-inline void* hkCpuThreadPool00 = nullptr;
-inline void* hkCpuThreadPool01 = nullptr;
-inline void* hkCpuThreadPool02 = nullptr;
 
 inline void* strafeCheckCode00 = nullptr;
 inline void* strafeCheckCode01 = nullptr;

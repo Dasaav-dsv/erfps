@@ -162,6 +162,7 @@ extern void ScanAOBs()
     const uint8_t rootTransformCodeMatch[] = { 0x48, 0x8D, 0xBB, 0x40, 0x01, 0x0, 0x0, 0x0F, 0x28, 0x0, 0x0F, 0x29, 0x07 };
     const uint8_t stateInfoCodeMatch_call[] = { 0x48, 0x8B, 0x89, 0x0, 0x0, 0x0, 0x0, 0x66, 0xBA, 0x0F, 0x0, 0x32, 0xDB };
     const uint8_t stateInfoCodeMatch_func[] = { 0x0F, 0xB7, 0x91, 0x0, 0x0, 0x0, 0x0, 0xEB, 0x0, 0x33, 0xD2, 0x66, 0x41, 0x3B, 0xD2 };
+    const uint8_t ragdollCodeMatch[] = { 0xE8, 0x0, 0x0, 0x0, 0x0, 0x0F, 0xB6, 0x93, 0x0, 0x0, 0x0, 0x0, 0x3C, 0x03 };
 
     const uint8_t hitDetectCodeMatch[] = { 0xFF, 0x50, 0x10, 0x8B, 0xD8, 0xBE, 0x0, 0x0, 0x0, 0x0, 0x83, 0xF8, 0x08 };
     const uint8_t hitDetectCodeCpyMatch[] = { 0x48, 0x8B, 0x95, 0x0, 0x0, 0x0, 0x0, 0x48, 0x8B, 0x52, 0x08, 0x48, 0x8B, 0xCF, 0xE8 };
@@ -241,6 +242,7 @@ extern void ScanAOBs()
     const char* rootTransformCodeMask = ".............";
     const char* stateInfoCodeMask_call = "...????......";
     const char* stateInfoCodeMask_func = "...????.?......";
+    const char* ragdollCodeMask = ".????...????..";
 
     const char* hitDetectCodeMask = "......????...";
     const char* hitDetectCodeCpyMask = "...????........";
@@ -322,6 +324,7 @@ extern void ScanAOBs()
     chunkCode = AOBScanCode(chunkCodeMatch, chunkCodeMask, 7);
     rootTransformCode = AOBScanCode(rootTransformCodeMatch, rootTransformCodeMask, 7);
     stateInfoCode = AOBScanFuncCall(stateInfoCodeMatch_call, stateInfoCodeMask_call, stateInfoCodeMatch_func, stateInfoCodeMask_func, 1000, 13);
+    ragdollCode = AOBScanCode(ragdollCodeMatch, ragdollCodeMask, 5);
 
     hitDetectCode = AOBScanCode(hitDetectCodeMatch, hitDetectCodeMask, 5);
     hitDetectCodeCpy = AOBScanCode(hitDetectCodeCpyMatch, hitDetectCodeCpyMask);

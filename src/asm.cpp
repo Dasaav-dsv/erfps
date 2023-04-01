@@ -757,6 +757,28 @@ extern void InjectAsm()
 	code.init(env);
 	code.attach(&a);
 	Label HvkB_retjmp = a.newLabel();
+	a.embed(reinterpret_cast<uint8_t*>(ragdollCode), 7);
+	a.mov(x86::rcx, &pCamData->pCamBool->isFPS);
+	a.cmp(x86::byte_ptr(x86::rcx), 1);
+	a.jne(reinterpret_cast<uint8_t*>(ragdollCode) + 7);
+	PUSHR;
+	a.push(x86::rdx);
+	a.mov(x86::rcx, x86::ptr(x86::rbx, 0x10));
+	a.mov(x86::rcx, x86::ptr(x86::rcx, 0x178));
+	a.mov(x86::edx, 0x7A991); // 502161
+	a.call(CheckSpEffect);
+	a.pop(x86::rdx);
+	a.movzx(x86::eax, x86::al);
+	a.shl(x86::eax, 1);
+	a.cmovne(x86::edx, x86::eax);
+	POPR;
+	a.jmp(reinterpret_cast<uint8_t*>(ragdollCode) + 7);
+	a.int3();
+	InitAsm(code, ragdollCode, codeMemFree, 2);
+
+	code.init(env);
+	code.attach(&a);
+	Label HvkB_retjmp = a.newLabel();
 	a.embed(reinterpret_cast<uint8_t*>(hvkBoneCode), 7);
 	PUSH;
 	a.mov(x86::rax, &pCamData->pCamBool->isCamInit);
