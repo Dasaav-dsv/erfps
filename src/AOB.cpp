@@ -202,6 +202,7 @@ extern void ScanAOBs()
     const uint8_t getChrBulletEmitterSlotCodeMatch[] = { 0x4C, 0x8B, 0xC3, 0x8B, 0x10, 0x48, 0x8D, 0x8B, 0x0, 0x0, 0x0, 0x0, 0xE8, 0x0, 0x0, 0x0, 0x0, 0x48, 0x89, 0x44, 0x24, 0x0, 0x48, 0x85, 0xC0 };
     const uint8_t getBulletParamEntryCodeMatch[] = { 0x78, 0x0, 0x48, 0x8D, 0x4C, 0x24, 0x0, 0x48, 0xC7, 0x44, 0x24, 0x0, 0x0, 0x0, 0x0, 0x0, 0xC7, 0x44, 0x24, 0x0, 0xFF, 0xFF, 0xFF, 0xFF, 0xC6, 0x44, 0x24, 0x0, 0x0, 0xE8 };
     const uint8_t getAttackParamEntryCodeMatch[] = { 0xE8, 0x0, 0x0, 0x0, 0x0, 0x8D, 0x47, 0xFF, 0x83, 0xF8, 0x0E, 0x77, 0x1B };
+    const uint8_t checkSpEffectCodeMatch[] = { 0xE8, 0x0, 0x0, 0x0, 0x0, 0xBA, 0x0, 0x0, 0x0, 0x0, 0x41, 0x88, 0x46 };
 
     const char* PlayerInsOffsetMask = "...????......????..????...";
     const char* ChrAsmOffsetMask = "...????.????......";
@@ -280,6 +281,7 @@ extern void ScanAOBs()
     const char* getChrBulletEmitterSlotCodeMask = "........????.????....?...";
     const char* getBulletParamEntryCodeMask = ".?....?....?.......?.......?..";
     const char* getAttackParamEntryCodeMask = ".????........";
+    const char* checkSpEffectCodeMask = ".????.????...";
 
     uint8_t* pPlayerInsOffset = reinterpret_cast<uint8_t*>(AOBScanCode(PlayerInsOffsetMatch, PlayerInsOffsetMask));
     PlayerInsOffset = pPlayerInsOffset != nullptr ? *reinterpret_cast<int32_t*>(pPlayerInsOffset + 13) + 0x18 : PlayerInsOffset;
@@ -384,4 +386,7 @@ extern void ScanAOBs()
 
     getAttackParamEntryCode = AOBScanCode(getAttackParamEntryCodeMatch, getAttackParamEntryCodeMask);
     getAttackParamEntryCode = getAttackParamEntryCode != nullptr ? reinterpret_cast<uint8_t*>(getAttackParamEntryCode) + *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(getAttackParamEntryCode) + 1) + 5 : nullptr;
+
+    checkSpEffectCode = AOBScanCode(checkSpEffectCodeMatch, checkSpEffectCodeMask);
+    checkSpEffectCode = checkSpEffectCode != nullptr ? reinterpret_cast<uint8_t*>(checkSpEffectCode) + *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(checkSpEffectCode) + 1) + 5 : nullptr;
 }

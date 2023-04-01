@@ -163,6 +163,7 @@
     <ClInclude Include="src\Defs.h" />
     <ClInclude Include="src\gamefn\EventFlag.h" />
     <ClInclude Include="src\FPS_ini.h" />
+    <ClInclude Include="src\gamefn\SpEffect.h" />
     <ClInclude Include="src\MsgRepoPatch.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="include\MCF\MemRegion.h" />

@@ -13,3 +13,5 @@ extern decltype(&::defGetEventFlag) GetEventFlag = nullptr;
 extern decltype(&::defSetEventFlag) SetEventFlag = nullptr;
 
 extern decltype(&::defHknpWorldRayCast) hknpWorldRayCast = nullptr;
+
+extern decltype(&::defCheckSpEffect) CheckSpEffect = nullptr;

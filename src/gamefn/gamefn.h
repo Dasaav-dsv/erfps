@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "EventFlag.h"
 #include "hk.h"
+#include "SpEffect.h"
 
 #include "../Pointer.h"
 
@@ -21,4 +22,6 @@ inline void GetGameFunctions()
 	SetEventFlag = reinterpret_cast<decltype(&::defSetEventFlag)>(setEventFlagCode);
 
 	hknpWorldRayCast = reinterpret_cast<decltype(&::defHknpWorldRayCast)>(hknpWorldRayCastCode);
+
+	CheckSpEffect = reinterpret_cast<decltype(&::defCheckSpEffect)>(checkSpEffectCode);
 }

@@ -419,6 +419,7 @@ inline void* createBulletInsCode = nullptr;
 inline void* getChrBulletEmitterSlotCode = nullptr;
 inline void* getBulletParamEntryCode = nullptr;
 inline void* getAttackParamEntryCode = nullptr;
+inline void* checkSpEffectCode = nullptr;
 
 inline void* TAE_Base_ptr = nullptr;
 inline void* TAE_PtrOffset = nullptr;
@@ -464,7 +465,7 @@ inline auto playerRootTransform_ptr = std::make_tuple(&WorldChrMan, &PlayerInsOf
 inline auto playerRootTransformMult_ptr = std::make_tuple(&WorldChrMan, &PlayerInsOffset, 0x0, 0x190, 0xC0, 0x24C);
 inline auto playerVel_ptr = std::make_tuple(&WorldChrMan, &PlayerInsOffset, 0x0, 0xC0, 0xF00);
 
-inline auto CSChrPhysicsModulePtr = std::make_tuple(&WorldChrMan, &PlayerInsOffset, 0x0, 0x190, 0x68);
+inline auto CSChrPhysicsModule_ptr = std::make_tuple(&WorldChrMan, &PlayerInsOffset, 0x0, 0x190, 0x68);
 
 inline auto isLockedOnMove_ptr = std::make_tuple(&WorldChrMan, &PlayerInsOffset, 0x0, 0x58, 0x199);
 inline auto isLockedOnAnim_ptr = std::make_tuple(&WorldChrMan, &PlayerInsOffset, 0x0, 0xC9);
