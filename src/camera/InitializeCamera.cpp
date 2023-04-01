@@ -48,9 +48,12 @@ extern void InitializeCamera(uint8_t* PlayerIns)
 
 		uint8_t* paramDataBuf1[4];
 
+		GetAttackParamEntry(paramDataBuf1, 1, 301100800);
+		*reinterpret_cast<uint32_t*>(paramDataBuf1[2] + 0x18) = 502161;
+
 		GetAttackParamEntry(paramDataBuf1, 1, 999999999);
-		*(paramDataBuf1[2] + 120) = 6;
-		*(paramDataBuf1[2] + 126) |= 12;
+		*(paramDataBuf1[2] + 0x78) = 6;
+		*(paramDataBuf1[2] + 0x7E) |= 12;
 
 		pCamData->pCamBool->isCamInit = true;
 	}
