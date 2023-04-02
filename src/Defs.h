@@ -73,6 +73,7 @@ struct CamData
 struct IniBool
 {
 	bool isArmReposEnable = true;
+	bool isDMMMKicks = true;
 	bool isTrueFPS = true;
 	bool isAirCtrl = true;
 	bool isTrackDodge = true;
@@ -98,7 +99,7 @@ struct IniSettings
 	float sensScalesistAng = 1.0f;
 	char crosshairType = *"A";
 	IndType* indicatorType = new IndType("LARGE");
-	float crosshairSize = 1.0f;
+	float crosshairSize = 0.9375f;
 	float crosshairSpread = 1.0f;
 };
 

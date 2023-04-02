@@ -77,6 +77,7 @@ extern void ParseFPSIni()
 		IniParseLineF(ini, "GENERAL", "Aim Assist Snap Angle", pIniSet->aimAssistAng);
 		IniParseLineF(ini, "GENERAL", "Sensitivity Scale", pIniSet->sensScalesistAng);
 		IniParseLineB(ini, "GENERAL", "New Arm Positioning", pIniSet->pIniBool->isArmReposEnable);
+		IniParseLineB(ini, "GENERAL", "Stronger Kick", pIniSet->pIniBool->isDMMMKicks);
 		IniParseLineB(ini, "GENERAL", "True FPS Movement", pIniSet->pIniBool->isTrueFPS);
 
 		IniParseLineB(ini, "TRUE FPS MOVEMENT", "Air Control", pIniSet->pIniBool->isAirCtrl);
@@ -114,6 +115,8 @@ extern void ParseFPSIni()
 		ini["GENERAL"]["Sensitivity Scale"] = std::to_string(pIniSet->sensScalesistAng);
 		ini["GENERAL"]["; reposition player's arms closer to the camera in first person:"];
 		ini["GENERAL"]["New Arm Positioning"] = pIniSet->pIniBool->isArmReposEnable ? "true" : "false";
+		ini["GENERAL"]["; kicks send small humanoid enemies flying - like Dark Messiah of Might and Magic:"];
+		ini["GENERAL"]["Stronger Kick"] = pIniSet->pIniBool->isDMMMKicks ? "true" : "false";
 		ini["GENERAL"]["; allow non-vanilla first person movement enchancements:"];
 		ini["GENERAL"]["True FPS Movement"] = pIniSet->pIniBool->isTrueFPS ? "true" : "false";
 
