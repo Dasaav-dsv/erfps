@@ -22,6 +22,7 @@ bool animRange500CheckFull(const uint32_t animationID, CamData* pCamData, varTAE
 {
 	switch (animationID / 500)
 	{
+	case 68065:
 	case 814090:
 	case 814290:
 	case 830090:
