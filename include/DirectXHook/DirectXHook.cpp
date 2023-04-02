@@ -121,7 +121,6 @@ IDXGISwapChain* DirectXHook::CreateDummySwapChain()
 
 	DestroyWindow(desc.OutputWindow);
 	UnregisterClass(wc.lpszClassName, GetModuleHandle(nullptr));
-	dummyDevice->Release();
 
 	if (FAILED(result))
 	{
@@ -185,8 +184,6 @@ void DirectXHook::HookSwapChain(
 	MemoryUtils::PlaceHook(presentAddress, presentDetourFunction, presentReturnAddress);
 
 	MemoryUtils::PlaceHook(resizeBuffersAddress, resizeBuffersDetourFunction, resizeBuffersReturnAddress);
-
-	dummySwapChain->Release();
 }
 
 void DirectXHook::HookCommandQueue(
