@@ -416,8 +416,8 @@ inline void* createBulletInsCode = nullptr;
 inline void* getChrBulletEmitterSlotCode = nullptr;
 inline void* getBulletParamEntryCode = nullptr;
 inline void* getAttackParamEntryCode = nullptr;
+inline void* getSpEffectParamEntryCode = nullptr;
 inline void* checkSpEffectCode = nullptr;
-inline void* getSpEffectParamCode = nullptr;
 
 inline void* TAE_Base_ptr = nullptr;
 inline void* TAE_PtrOffset = nullptr;

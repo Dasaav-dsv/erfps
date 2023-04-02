@@ -754,27 +754,38 @@ extern void InjectAsm()
 	a.embedUInt32(0);
 	InitAsm(code, stateInfoCode, codeMemFree, 2);
 
-	code.init(env);
-	code.attach(&a);
-	Label HvkB_retjmp = a.newLabel();
-	a.embed(reinterpret_cast<uint8_t*>(ragdollCode), 7);
-	a.mov(x86::rcx, &pCamData->pCamBool->isFPS);
-	a.cmp(x86::byte_ptr(x86::rcx), 1);
-	a.jne(reinterpret_cast<uint8_t*>(ragdollCode) + 7);
-	PUSHR;
-	a.push(x86::rdx);
-	a.mov(x86::rcx, x86::ptr(x86::rbx, 0x10));
-	a.mov(x86::rcx, x86::ptr(x86::rcx, 0x178));
-	a.mov(x86::edx, 0x7A991); // 502161
-	a.call(CheckSpEffect);
-	a.pop(x86::rdx);
-	a.movzx(x86::eax, x86::al);
-	a.shl(x86::eax, 1);
-	a.cmovne(x86::edx, x86::eax);
-	POPR;
-	a.jmp(reinterpret_cast<uint8_t*>(ragdollCode) + 7);
-	a.int3();
-	InitAsm(code, ragdollCode, codeMemFree, 2);
+	if (pIniSet->pIniBool->isDMMMKicks)
+	{
+		code.init(env);
+		code.attach(&a);
+		Label RdC_retjmp = a.newLabel();
+		Label RdC_SpCheck = a.newLabel();
+		a.embed(reinterpret_cast<uint8_t*>(ragdollCode), 7);
+		PUSHR;
+		a.mov(x86::rax, x86::ptr(x86::rbx, 0x10));
+		a.cmp(x86::byte_ptr(x86::rbx, 0x128), 2);
+		a.je(RdC_SpCheck);
+		a.mov(x86::rcx, x86::ptr(x86::rax, 0x190));
+		a.mov(x86::rcx, x86::ptr(x86::rcx, 0x8));
+		a.cmp(x86::byte_ptr(x86::rcx, 0x45), 2);
+		a.jne(RdC_retjmp);
+		a.bind(RdC_SpCheck);
+		a.mov(x86::rcx, x86::ptr(x86::rax, 0x58));
+		a.mov(x86::rcx, x86::ptr(x86::rcx, 0xC8));
+		a.test(x86::byte_ptr(x86::rcx, 0x24), -1);
+		a.jne(RdC_retjmp);
+		a.mov(x86::rcx, x86::ptr(x86::rax, 0x178));
+		a.mov(x86::edx, 0x7A5BC); // 501180
+		a.call(CheckSpEffect);
+		a.shl(x86::al, 1);
+		a.movzx(x86::edx, x86::al);
+		a.mov(x86::byte_ptr(x86::rbx, 0x128), x86::al);
+		a.bind(RdC_retjmp);
+		POPR;
+		a.jmp(reinterpret_cast<uint8_t*>(ragdollCode) + 7);
+		a.int3();
+		InitAsm(code, ragdollCode, codeMemFree, 2);
+	}
 
 	code.init(env);
 	code.attach(&a);
