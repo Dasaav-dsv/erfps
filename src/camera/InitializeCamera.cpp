@@ -3,6 +3,7 @@
 extern void InitializeCamera(uint8_t* PlayerIns)
 {
 	CamData* pCamData = &camData;
+	IniSettings* pIniSet = &iniSet;
 
 	if (reinterpret_cast<uint64_t*>(WorldChrMan) != nullptr)
 	{
@@ -39,17 +40,43 @@ extern void InitializeCamera(uint8_t* PlayerIns)
 		}
 
 		uint8_t* paramDataBuf0[2];
-
-		GetBulletParamEntry(paramDataBuf0, 10000001);
-		std::memcpy(paramDataBuf0[0], bulletParam101, sizeof(bulletParam101));
-
-		GetBulletParamEntry(paramDataBuf0, 10000002);
-		std::memcpy(paramDataBuf0[0], bulletParam102, sizeof(bulletParam102));
-
 		uint8_t* paramDataBuf1[4];
 
-		GetAttackParamEntry(paramDataBuf1, 1, 301100800);
-		*reinterpret_cast<uint32_t*>(paramDataBuf1[2] + 0x18) = 502161;
+		if (pIniSet->pIniBool->isShowAttacks)
+		{
+			GetBulletParamEntry(paramDataBuf0, 10000001);
+			std::memcpy(paramDataBuf0[0], bulletParam101, sizeof(bulletParam101));
+
+			GetBulletParamEntry(paramDataBuf0, 10000002);
+			std::memcpy(paramDataBuf0[0], bulletParam102, sizeof(bulletParam102));
+		}
+
+		if (pIniSet->pIniBool->isDMMMKicks)
+		{
+			GetSpEffectParamEntry(paramDataBuf0, 501180);
+			*reinterpret_cast<int*>(paramDataBuf0[0]) = -1;
+			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x8) = 2.0f;
+			*reinterpret_cast<short*>(paramDataBuf0[0] + 0x13E) = 0;
+			*(paramDataBuf0[0] + 0x16C) |= 33;
+			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x170) = -1;
+			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x18C) = -1;
+			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x270) = 1.0f;
+			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x284) = 1.0f;
+
+			GetSpEffectParamEntry(paramDataBuf0, 501220);
+			*reinterpret_cast<int*>(paramDataBuf0[0]) = -1;
+			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x8) = 0.125f;
+			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x124) = 501180;
+			*reinterpret_cast<short*>(paramDataBuf0[0] + 0x13E) = 0;
+			*(paramDataBuf0[0] + 0x16C) |= 33;
+			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x170) = -1;
+			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x18C) = -1;
+			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x208) = 0;
+
+			GetAttackParamEntry(paramDataBuf1, 1, 301100800);
+			*reinterpret_cast<uint32_t*>(paramDataBuf1[2] + 0x18) = 501220;
+			*(paramDataBuf1[2] + 0x72) = 10;
+		}
 
 		GetAttackParamEntry(paramDataBuf1, 1, 999999999);
 		*(paramDataBuf1[2] + 0x78) = 6;

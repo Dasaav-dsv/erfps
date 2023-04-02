@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../stdafx.h"
-#include "../gamefn/EventFlag.h"
+#include "../gamefn/gamefn.h"
 #include "InitializeCamera.h"
 
 extern void PerspectiveControl();
