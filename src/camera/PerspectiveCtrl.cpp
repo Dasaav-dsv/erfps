@@ -14,7 +14,7 @@ extern void CameraFPS()
 	ViewMatrix* fcam_mtx = TraverseSafePtr<ViewMatrix>(flwChrCam_ptr);
 	ViewMatrix* ccam_mtx = TraverseSafePtr<ViewMatrix>(chrCam_ptr);
 
-	if (TraverseUnsafePtr(CSChrPhysicsModulePtr) != nullptr)
+	if (TraverseUnsafePtr(CSChrPhysicsModule_ptr) != nullptr)
 	{
 		const float sinPlayerRot_2 = std::clamp(*TraverseSafeOffsetPtr<float>(0x04, 1, playerRot_ptr), -1.0f, 1.0f);
 		const float sinPlayerRot = sinPlayerRot_2 * sqrtf(1.0f - sinPlayerRot_2 * sinPlayerRot_2) * 2.0f;
@@ -109,7 +109,7 @@ extern void PerspectiveControl()
 {
 	CamData* pCamData = &camData;
 
-	if (TraverseUnsafePtr<void>(CSChrPhysicsModulePtr) == nullptr)
+	if (TraverseUnsafePtr<void>(CSChrPhysicsModule_ptr) == nullptr)
 	{
 		return;
 	}

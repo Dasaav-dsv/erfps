@@ -23,5 +23,7 @@ inline void GetGameFunctions()
 
 	hknpWorldRayCast = reinterpret_cast<decltype(&::defHknpWorldRayCast)>(hknpWorldRayCastCode);
 
+	GetSpEffectParamEntry = reinterpret_cast<decltype(&::defGetSpEffectParamEntry)>(getSpEffectParamEntryCode);
+
 	CheckSpEffect = reinterpret_cast<decltype(&::defCheckSpEffect)>(checkSpEffectCode);
 }
