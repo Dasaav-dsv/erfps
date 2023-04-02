@@ -345,10 +345,12 @@ inline void* hitDetectCode = nullptr;
 inline void* hitDetectCodeCpy = nullptr;
 inline void* hitDetectCodeEnd = nullptr;
 inline void* hitRegisterCode = nullptr;
+inline void* hitEnemyRegCode = nullptr;
 inline void* regBulletCode = nullptr;
 inline void* dstBulletCode = nullptr;
 
 inline void* hitRegisterCall = nullptr;
+inline void* hitEnemyRegCall = nullptr;
 
 inline void* hvkBoneCode = nullptr;
 

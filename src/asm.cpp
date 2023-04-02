@@ -618,6 +618,19 @@ extern void InjectAsm()
 
 	code.init(env);
 	code.attach(&a);
+	a.mov(x86::rax, &BulletIns);
+	a.mov(x86::rax, x86::ptr(x86::rax));
+	a.cmp(x86::rax, x86::ptr(x86::r8, 0x1D8));
+	a.mov(x86::al, 0);
+	a.mov(x86::r15b, 1);
+	a.je(reinterpret_cast<uint8_t*>(hitEnemyRegCode) + 5);
+	a.call(hitEnemyRegCall);
+	a.jmp(reinterpret_cast<uint8_t*>(hitEnemyRegCode) + 5);
+	a.int3();
+	InitAsm(code, hitEnemyRegCode, codeMemFree);
+
+	code.init(env);
+	code.attach(&a);
 	Label CBIC_retjmp = a.newLabel();
 	Label CBIC_loop = a.newLabel();
 	a.embed(reinterpret_cast<uint8_t*>(createBulletInsCode), 5);

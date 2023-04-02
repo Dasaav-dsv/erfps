@@ -9,7 +9,7 @@ inline void* AOBScanAddress(const unsigned char* AOBString, const char* AOBMask,
     const auto mregion = mem::region(region, region_size);
     char* result = mem::simd_scanner(pattern).scan(mregion).any();
 
-    if (result == nullptr)
+    if (!result)
     {
         AllocConsoleOnce();
         size_t AOBStrLen = std::strlen(AOBMask);
@@ -26,27 +26,40 @@ inline void* AOBScanAddress(const unsigned char* AOBString, const char* AOBMask,
 
 inline void* AOBScanCode(const uint8_t* AOBString, const char* AOBMask, const int Offset = 0, const void* region = text, const size_t region_size = text_size)
 {
-    return reinterpret_cast<void*>(reinterpret_cast<uint8_t*>(AOBScanAddress(AOBString, AOBMask, region, region_size)) + Offset);
+    uint8_t* addr = reinterpret_cast<uint8_t*>(AOBScanAddress(AOBString, AOBMask, region, region_size));
+
+    if (!addr)
+    {
+        return nullptr;
+    }
+
+    return reinterpret_cast<void*>(addr + Offset);
 }
 
 inline void** AOBScanBase(const unsigned char* AOBString, const char* AOBMask, const int InOffset = 7, const int OpOffset = 3)
 {
     uint8_t* addr = static_cast<uint8_t*>(AOBScanAddress(AOBString, AOBMask));
-    return reinterpret_cast<void**>(addr + *reinterpret_cast<int32_t*>(addr + OpOffset) + InOffset);
+    return addr != nullptr ? reinterpret_cast<void**>(addr + *reinterpret_cast<int32_t*>(addr + OpOffset) + InOffset) : nullptr;
 }
 
 inline void* AOBScanFuncCall(const unsigned char* AOBString1, const char* AOBMask1, const unsigned char* AOBString2, const char* AOBMask2, const size_t FuncSize, const int CallOffset = 0)
 {
     uint8_t* addr = reinterpret_cast<uint8_t*>(AOBScanAddress(AOBString1, AOBMask1));
+
+    if (!addr)
+    {
+        return nullptr;
+    }
+
     addr = addr + *reinterpret_cast<int32_t*>(addr + 1 + CallOffset) + 5 + CallOffset;
     return AOBScanAddress(AOBString2, AOBMask2, addr, FuncSize);
 }
 
 extern void GetText()
 {
-    const char TextstrMatch[] = ".text"; // refused to work with char* string
+    const char textStrMatch[] = ".text"; // refused to work with char* string
 
-    const auto pattern = mem::pattern(TextstrMatch, ".....");
+    const auto pattern = mem::pattern(textStrMatch, ".....");
     const auto region = mem::region(mInfo.lpBaseOfDll, mInfo.SizeOfImage);
     uint8_t* result = mem::simd_scanner(pattern).scan(region).any();
 
@@ -168,6 +181,7 @@ extern void ScanAOBs()
     const uint8_t hitDetectCodeCpyMatch[] = { 0x48, 0x8B, 0x95, 0x0, 0x0, 0x0, 0x0, 0x48, 0x8B, 0x52, 0x08, 0x48, 0x8B, 0xCF, 0xE8 };
     const uint8_t hitDetectCodeEndMatch[] = { 0x48, 0x8B, 0x8D, 0x0, 0x0, 0x0, 0x0, 0x48, 0x33, 0xCC, 0xE8 };
     const uint8_t hitRegisterCodeMatch[] = { 0x4D, 0x8B, 0xCE, 0x4D, 0x8B, 0xC5, 0x48, 0x8B, 0xD7, 0x48, 0x8B, 0x49, 0x40, 0xE8 };
+    const uint8_t hitEnemyRegCodeMatch[] = { 0x48, 0x8B, 0x86, 0x0, 0x0, 0x0, 0x0, 0x45, 0x33, 0xC9, 0x4C, 0x8B, 0xC7, 0x49, 0x8B, 0xD6, 0x48, 0x8B, 0x88, 0x0, 0x0, 0x0, 0x0, 0xE8, 0x0, 0x0, 0x0, 0x0, 0x84, 0xC0 };
     const uint8_t regBulletCodeMatch[] = { 0xFF, 0x43, 0x18, 0xFF, 0x43, 0x1C, 0x48, 0x8B, 0x4B, 0x08, 0x48, 0x89, 0x8A };
     const uint8_t dstBulletCodeMatch[] = { 0x0F, 0x28, 0x7C, 0x24, 0x0, 0xF3, 0x0F, 0x11, 0xB3, 0x0, 0x0, 0x0, 0x0, 0xF3, 0x0F, 0x11, 0xB3 };
 
@@ -249,6 +263,7 @@ extern void ScanAOBs()
     const char* hitDetectCodeCpyMask = "...????........";
     const char* hitDetectCodeEndMask = "...????....";
     const char* hitRegisterCodeMask = "..............";
+    const char* hitEnemyRegCodeMask = "...????............????.????..";
     const char* regBulletCodeMask = ".............";
     const char* dstBulletCodeMask = "....?....????....";
 
@@ -332,10 +347,12 @@ extern void ScanAOBs()
     hitDetectCodeCpy = AOBScanCode(hitDetectCodeCpyMatch, hitDetectCodeCpyMask);
     hitDetectCodeEnd = AOBScanCode(hitDetectCodeEndMatch, hitDetectCodeEndMask, 0, hitDetectCodeCpy, 0x1000);
     hitRegisterCode = AOBScanCode(hitRegisterCodeMatch, hitRegisterCodeMask, 13);
+    hitEnemyRegCode = AOBScanCode(hitEnemyRegCodeMatch, hitEnemyRegCodeMask, 23);
     regBulletCode = AOBScanCode(regBulletCodeMatch, regBulletCodeMask, 10);
     dstBulletCode = AOBScanCode(dstBulletCodeMatch, dstBulletCodeMask);
 
-    hitRegisterCall = reinterpret_cast<uint8_t*>(hitRegisterCode) + *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(hitRegisterCode) + 1) + 5;
+    hitRegisterCall = hitRegisterCode != nullptr ? reinterpret_cast<uint8_t*>(hitRegisterCode) + *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(hitRegisterCode) + 1) + 5 : nullptr;
+    hitEnemyRegCall = hitEnemyRegCode != nullptr ? reinterpret_cast<uint8_t*>(hitEnemyRegCode) + *reinterpret_cast<int32_t*>(reinterpret_cast<uint8_t*>(hitEnemyRegCode) + 1) + 5 : nullptr;
 
     hvkBoneCode = AOBScanCode(hvkBoneCodeMatch, hvkBoneCodeMask, 0);
 
