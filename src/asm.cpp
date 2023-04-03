@@ -788,7 +788,7 @@ extern void InjectAsm()
 		a.test(x86::byte_ptr(x86::rcx, 0x24), -1);
 		a.jne(RdC_retjmp);
 		a.mov(x86::rcx, x86::ptr(x86::rax, 0x178));
-		a.mov(x86::edx, 0x7A5BC); // 501180
+		a.mov(x86::edx, 0x81651); // 530001
 		a.call(CheckSpEffect);
 		a.shl(x86::al, 1);
 		a.movzx(x86::edx, x86::al);

@@ -53,28 +53,21 @@ extern void InitializeCamera(uint8_t* PlayerIns)
 
 		if (pIniSet->pIniBool->isDMMMKicks)
 		{
-			GetSpEffectParamEntry(paramDataBuf0, 501180);
-			*reinterpret_cast<int*>(paramDataBuf0[0]) = -1;
+			GetSpEffectParamEntry(paramDataBuf0, 530001);
 			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x8) = 2.0f;
-			*reinterpret_cast<short*>(paramDataBuf0[0] + 0x13E) = 0;
 			*(paramDataBuf0[0] + 0x16C) |= 33;
 			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x170) = -1;
 			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x18C) = -1;
-			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x270) = 1.0f;
-			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x284) = 1.0f;
 
-			GetSpEffectParamEntry(paramDataBuf0, 501220);
-			*reinterpret_cast<int*>(paramDataBuf0[0]) = -1;
+			GetSpEffectParamEntry(paramDataBuf0, 530002);
 			*reinterpret_cast<float*>(paramDataBuf0[0] + 0x8) = 0.125f;
-			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x124) = 501180;
-			*reinterpret_cast<short*>(paramDataBuf0[0] + 0x13E) = 0;
+			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x124) = 530001;
 			*(paramDataBuf0[0] + 0x16C) |= 33;
 			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x170) = -1;
 			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x18C) = -1;
-			*reinterpret_cast<int*>(paramDataBuf0[0] + 0x208) = 0;
 
 			GetAttackParamEntry(paramDataBuf1, 1, 301100800);
-			*reinterpret_cast<uint32_t*>(paramDataBuf1[2] + 0x18) = 501220;
+			*reinterpret_cast<uint32_t*>(paramDataBuf1[2] + 0x18) = 530002;
 			*(paramDataBuf1[2] + 0x72) = 10;
 		}
 
