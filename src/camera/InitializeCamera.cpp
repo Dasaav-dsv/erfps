@@ -42,11 +42,11 @@ extern void InitializeCamera(uint8_t* PlayerIns)
 		uint8_t* paramDataBuf0[2];
 		uint8_t* paramDataBuf1[4];
 
+		GetBulletParamEntry(paramDataBuf0, 10000001);
+		std::memcpy(paramDataBuf0[0], bulletParam101, sizeof(bulletParam101));
+
 		if (pIniSet->pIniBool->isShowAttacks)
 		{
-			GetBulletParamEntry(paramDataBuf0, 10000001);
-			std::memcpy(paramDataBuf0[0], bulletParam101, sizeof(bulletParam101));
-
 			GetBulletParamEntry(paramDataBuf0, 10000002);
 			std::memcpy(paramDataBuf0[0], bulletParam102, sizeof(bulletParam102));
 		}
