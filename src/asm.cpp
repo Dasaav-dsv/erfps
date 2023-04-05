@@ -618,13 +618,12 @@ extern void InjectAsm()
 
 	code.init(env);
 	code.attach(&a);
+	a.call(hitEnemyRegCall);
+	a.mov(x86::r15b, x86::al);
 	a.mov(x86::rax, &BulletIns);
 	a.mov(x86::rax, x86::ptr(x86::rax));
-	a.cmp(x86::rax, x86::ptr(x86::r8, 0x1D8));
-	a.mov(x86::al, 0);
-	a.mov(x86::r15b, 1);
-	a.je(reinterpret_cast<uint8_t*>(hitEnemyRegCode) + 5);
-	a.call(hitEnemyRegCall);
+	a.cmp(x86::rax, x86::ptr(x86::rdi, 0x1D8));
+	a.setne(x86::al);
 	a.jmp(reinterpret_cast<uint8_t*>(hitEnemyRegCode) + 5);
 	a.int3();
 	InitAsm(code, hitEnemyRegCode, codeMemFree);
